@@ -20,8 +20,13 @@ import { OBJLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth/window.innerHeight,
+    0.1,
+    1000
+);
+camera.position.z = 10;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -32,39 +37,41 @@ light.position.set(5,5,5);
 scene.add(light);
 
 const loader = new OBJLoader();
+
 loader.load('models/PowerSource.obj', function (object) {
 
-    // Calcular tamaño
     const box = new THREE.Box3().setFromObject(object);
     const size = box.getSize(new THREE.Vector3()).length();
     const center = box.getCenter(new THREE.Vector3());
 
-    // Centrar modelo
     object.position.sub(center);
 
-    // Escalar modelo
     const scale = 5 / size;
     object.scale.setScalar(scale);
 
+    object.traverse(function(child) {
+        if (child.isMesh) {
+            child.material = new THREE.MeshNormalMaterial();
+        }
+    });
+
     scene.add(object);
 
-    object.traverse(function(child) {
-    if (child.isMesh) {
-        child.material = new THREE.MeshNormalMaterial();
-    }
-});
+}); // ← ESTA LLAVE FALTABA
 
 function animate() {
     requestAnimationFrame(animate);
     scene.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
+
 animate();
 </script>
 
 </body>
 
 </html>
+
 
 
 
