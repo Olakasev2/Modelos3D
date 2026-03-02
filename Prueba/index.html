@@ -44,6 +44,11 @@ loader.load('models/PowerSource.obj', function (object) {
     object.scale.setScalar(scale);
 
     scene.add(object);
+
+    object.traverse(function(child) {
+    if (child.isMesh) {
+        child.material = new THREE.MeshNormalMaterial();
+    }
 });
 
 function animate() {
@@ -57,6 +62,7 @@ animate();
 </body>
 
 </html>
+
 
 
 
