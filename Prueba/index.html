@@ -29,7 +29,20 @@ light.position.set(5,5,5);
 scene.add(light);
 
 const loader = new OBJLoader();
-loader.load('Modelos3D/Prueba/models/PowerSource.obj', function (object) {
+loader.load('models/PowerSource.obj', function (object) {
+
+    // Calcular tamaño
+    const box = new THREE.Box3().setFromObject(object);
+    const size = box.getSize(new THREE.Vector3()).length();
+    const center = box.getCenter(new THREE.Vector3());
+
+    // Centrar modelo
+    object.position.sub(center);
+
+    // Escalar modelo
+    const scale = 5 / size;
+    object.scale.setScalar(scale);
+
     scene.add(object);
 });
 
@@ -44,4 +57,5 @@ animate();
 </body>
 
 </html>
+
 
