@@ -86,7 +86,18 @@ scene.add(lightSide);
 
 const loader = new OBJLoader();
 
-loader.load('models/PowerSource.obj', function(object){
+const query = new URLSearchParams(window.location.search);
+const requestedModel = query.get('model') || 'PowerSource.obj';
+const modelMap = {
+  powersource: 'PowerSource.obj'
+};
+
+const normalizedRequestedModel = requestedModel.trim().toLowerCase();
+const mappedModel = modelMap[normalizedRequestedModel] || requestedModel;
+const safeFileName = mappedModel.replace(/\\/g, '/').split('/').pop();
+const modelPath = `models/${safeFileName}`;
+
+loader.load(modelPath, function(object){
 
   object.traverse(function(child){
     if(child.isMesh){
@@ -125,6 +136,12 @@ loader.load('models/PowerSource.obj', function(object){
     document.documentElement.requestFullscreen().catch(err => {
       console.log('No se pudo activar fullscreen:', err);
     });
+  }
+}, undefined, function(error) {
+  console.error('Error cargando modelo:', modelPath, error);
+  const instructions = document.getElementById('instructions');
+  if (instructions) {
+    instructions.innerHTML += `<p>⚠️ No se encontró: ${safeFileName}</p>`;
   }
 });
 
