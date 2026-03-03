@@ -35,8 +35,6 @@ const camera = new THREE.PerspectiveCamera(
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFShadowShadowMap;
 document.body.appendChild(renderer.domElement);
 
 // Controles para interactuar (rotar/zoom/pan)
@@ -46,22 +44,13 @@ controls.dampingFactor = 0.08;
 controls.target.set(0, 0, 0);
 
 scene.add(new THREE.AxesHelper(5));
-scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+scene.add(new THREE.AmbientLight(0xffffff, 0.7));
 
-const light = new THREE.DirectionalLight(0xffffff, 1.2);
+const light = new THREE.DirectionalLight(0xffffff, 0.8);
 light.position.set(15, 20, 15);
-light.castShadow = true;
-light.shadow.mapSize.width = 2048;
-light.shadow.mapSize.height = 2048;
-light.shadow.camera.near = 0.5;
-light.shadow.camera.far = 500;
-light.shadow.camera.left = -50;
-light.shadow.camera.right = 50;
-light.shadow.camera.top = 50;
-light.shadow.camera.bottom = -50;
 scene.add(light);
 
-const light2 = new THREE.PointLight(0xffffff, 0.5);
+const light2 = new THREE.PointLight(0xffffff, 0.4);
 light2.position.set(-15, 10, -15);
 scene.add(light2);
 
@@ -71,14 +60,8 @@ loader.load('models/PowerSource.obj', function(object){
 
   object.traverse(function(child){
     if(child.isMesh){
-      // Mejorar material para ver detalles
-      child.material = new THREE.MeshStandardMaterial({
-        color: 0x888888,
-        metalness: 0.3,
-        roughness: 0.6
-      });
-      child.castShadow = true;
       child.receiveShadow = true;
+      // Mantener material original
     }
   });
 
