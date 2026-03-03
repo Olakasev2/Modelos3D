@@ -14,64 +14,73 @@
 <p>Hola</p>
   
 <script type="module">
-import * as THREE from 'https://cdn.skypack.dev/three@0.160.0';
-import { OBJLoader } from 'https://cdn.skypack.dev/three@0.160.0/examples/jsm/loaders/OBJLoader.js';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/examples/js/controls/OrbitControls.js"></script>
 
+<script>
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
 
 const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth/window.innerHeight,
-    0.1,
-    1000
+  60,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  10000
 );
-camera.position.z = 10;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+scene.add(new THREE.AxesHelper(5));
+scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+
 const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5,5,5);
+light.position.set(10,10,10);
 scene.add(light);
 
-const loader = new OBJLoader();
+const loader = new THREE.OBJLoader();
 
-loader.load('models/PowerSource.obj', function (object) {
+loader.load('models/PowerSource.obj', function(object){
 
-    const box = new THREE.Box3().setFromObject(object);
-    const size = box.getSize(new THREE.Vector3()).length();
-    const center = box.getCenter(new THREE.Vector3());
-
-    object.position.sub(center);
-
-    const scale = 5 / size;
-    object.scale.setScalar(scale);
-
-    object.traverse(function(child) {
-        if (child.isMesh) {
+    object.traverse(function(child){
+        if(child.isMesh){
             child.material = new THREE.MeshNormalMaterial();
         }
     });
 
     scene.add(object);
 
-}); // ← ESTA LLAVE FALTABA
+    const box = new THREE.Box3().setFromObject(object);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
 
-function animate() {
+    object.position.sub(center);
+
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const fov = camera.fov * (Math.PI / 180);
+    let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+
+    camera.position.z = cameraZ * 1.5;
+    camera.lookAt(0,0,0);
+
+});
+
+function animate(){
     requestAnimationFrame(animate);
-    scene.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
-
 animate();
+</script>
 </script>
 
 </body>
 
 </html>
+
 
 
 
