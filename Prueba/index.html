@@ -54,12 +54,6 @@ const loader = new OBJLoader();
 
 loader.load('models/PowerSource.obj', function(object){
 
-  object.traverse(function(child){
-    if(child.isMesh){
-      child.material = new THREE.MeshNormalMaterial();
-    }
-  });
-
   scene.add(object);
 
   // Centrar el objeto
