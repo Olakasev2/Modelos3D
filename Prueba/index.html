@@ -6,9 +6,38 @@
   <style>
     body { margin: 0; overflow: hidden; }
     canvas { display: block; }
+    #instructions {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.6;
+      max-width: 200px;
+      z-index: 10;
+    }
+    #instructions h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+    }
+    #instructions p {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
+
+<div id="instructions">
+  <h3>Controles</h3>
+  <p>🖱️ Rotar: Click derecho + arrastrar</p>
+  <p>🔍 Zoom: Rueda del ratón</p>
+  <p>➡️ Mover: Click central + arrastrar</p>
+  <p>⏎ Pantalla completa: F</p>
+</div>
 
 <script type="importmap">
 {
@@ -90,12 +119,32 @@ loader.load('models/PowerSource.obj', function(object){
   // IMPORTANTE: que el control rote alrededor del centro
   controls.target.set(0, 0, 0);
   controls.update();
+
+  // Entrar en pantalla completa
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen().catch(err => {
+      console.log('No se pudo activar fullscreen:', err);
+    });
+  }
 });
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Tecla F para fullscreen
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'f') {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('No se pudo activar fullscreen:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  }
 });
 
 function animate(){
