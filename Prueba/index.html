@@ -15,7 +15,6 @@
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/loaders/OBJLoader.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/controls/OrbitControls.js"></script>
 
 <script>
 const scene = new THREE.Scene();
@@ -32,10 +31,8 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
 scene.add(new THREE.AxesHelper(5));
-scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+scene.add(new THREE.AmbientLight(0xffffff, 1));
 
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(10,10,10);
@@ -77,6 +74,7 @@ animate();
 </body>
 
 </html>
+
 
 
 
