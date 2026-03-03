@@ -14,8 +14,9 @@
 <p>Hola</p>
   
 <script type="module">
-import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
-import { OBJLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/OBJLoader.js';
+import * as THREE from 'https://cdn.skypack.dev/three@0.160.0';
+import { OBJLoader } from 'https://cdn.skypack.dev/three@0.160.0/examples/jsm/loaders/OBJLoader.js';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
@@ -71,6 +72,7 @@ animate();
 </body>
 
 </html>
+
 
 
 
