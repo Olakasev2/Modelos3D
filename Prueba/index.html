@@ -83,7 +83,8 @@ loader.load('models/PowerSource.obj', function(object){
   const fov = camera.fov * (Math.PI / 180);
   const cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
 
-  camera.position.set(0, 0, cameraZ * 1.5);
+  // Posición diagonal (arriba y a un lado)
+  camera.position.set(cameraZ * 1.2, cameraZ * 0.8, cameraZ * 1.2);
   camera.lookAt(0,0,0);
 
   // IMPORTANTE: que el control rote alrededor del centro
