@@ -13,9 +13,10 @@
 
 <p>Hola</p>
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/examples/js/loaders/OBJLoader.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/controls/OrbitControls.js"></script>
+
 <script>
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
@@ -64,7 +65,6 @@ loader.load('models/PowerSource.obj', function(object){
 
     camera.position.z = cameraZ * 1.5;
     camera.lookAt(0,0,0);
-
 });
 
 function animate(){
@@ -77,6 +77,7 @@ animate();
 </body>
 
 </html>
+
 
 
 
