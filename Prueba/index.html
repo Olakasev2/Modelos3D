@@ -8,15 +8,20 @@
     canvas { display: block; }
   </style>
 </head>
-  
 <body>
 
-<p>Hola</p>
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/loaders/OBJLoader.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
 
-<script>
+<script type="module">
+import * as THREE from "three";
+import { OBJLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/OBJLoader.js";
+
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
 
@@ -38,7 +43,7 @@ const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(10,10,10);
 scene.add(light);
 
-const loader = new THREE.OBJLoader();
+const loader = new OBJLoader();
 
 loader.load('models/PowerSource.obj', function(object){
 
@@ -65,24 +70,11 @@ loader.load('models/PowerSource.obj', function(object){
 });
 
 function animate(){
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
 }
 animate();
 </script>
 
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
